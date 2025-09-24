@@ -1,0 +1,127 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Day 5 · Skandamata</title><style>
+  :root{
+    --grad1:#1c1230; --grad2:#2a1645; --ink:#f7efe4; --muted:#bdaecf;
+    --gold:#f1c96b; --accent:#ffd98f; --card:#2a2042; --panel:#1e1733;
+  }
+  html,body{height:100%}
+  body{margin:0;color:var(--ink);font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+       background:radial-gradient(160% 180% at 50% -20%, var(--grad2) 0%, var(--grad1) 60%, #150b24 100%);}
+  header.sticky{position:sticky;top:0;z-index:10;background:linear-gradient(180deg,rgba(0,0,0,.45),rgba(0,0,0,0));backdrop-filter:blur(6px);}
+  .wrap{max-width:1180px;margin:0 auto;padding:18px}
+  h1{margin:10px 0 6px 0;color:var(--accent);font-size:clamp(26px,3.4vw,44px);text-shadow:0 2px 20px rgba(255,217,143,.25)}
+  .sub{color:var(--muted);margin:0}
+  .pills{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .pill{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);color:#ffe6bb;padding:6px 10px;border-radius:999px;text-decoration:none;font-weight:700}
+  .pill.active{background:linear-gradient(180deg,#ffd98f,#f1c96b);color:#2a1444;border-color:#ffd98f}
+  .score{margin-left:auto;background:rgba(255,255,255,.08);padding:6px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.2)}
+  .hero{padding:34px 0 10px;border-top:2px solid rgba(241,201,107,.3);}
+  .dayBadge{display:inline-block;background:#3a2b67;color:#ffe6b8;border:2px solid rgba(241,201,107,.6);padding:10px 16px;border-radius:999px;font-weight:800}
+  .title{font-size:clamp(30px,4vw,54px);margin:16px 0 4px 0;color:#ffd98f;text-align:center}
+  .ep{color:#cfbfec;text-align:center;margin-top:4px}
+  .card{background:radial-gradient(120% 160% at 50% 0%,#3a2370 0%,#2b1a55 55%,#231847 100%);border-radius:24px;border:2px solid rgba(241,201,107,.55);box-shadow:0 14px 36px rgba(0,0,0,.35), inset 0 0 0 1px rgba(255,255,255,.05);padding:16px;margin:18px 0}
+  .card h2{margin:6px 0 10px 0;color:#ffd98f;font-size:clamp(22px,2.2vw,32px)}
+  .stage{background:#fff;border-radius:18px;border:4px solid var(--gold);min-height:300px;display:flex;align-items:center;justify-content:center;color:#999;overflow:hidden}
+  .stage svg{width:100%;height:320px;display:block}
+  .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  .btn{appearance:none;border:none;cursor:pointer;background:linear-gradient(180deg,#ffd98f,#f1c96b);color:#2a1540;font-weight:800;border-radius:999px;padding:10px 14px;box-shadow:0 8px 22px rgba(0,0,0,.25)}
+  .btn.ghost{background:transparent;color:#ffe6b8;border:1px solid rgba(255,255,255,.28)}
+  .muted{color:#ccbfe0}
+  .quote{background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.15);border-radius:16px;padding:14px;margin:8px 0}
+  .panel{background:#24324a;border-radius:18px;border:1px solid rgba(255,255,255,.12);padding:18px}
+  .panel .box{background:#3c4657;border-radius:14px;padding:14px;border:1px solid rgba(255,255,255,.1);margin:12px 0;color:#f1f5ff}
+  .bullet{margin:0}.bullet li{margin:8px 0}
+  .footerNav{display:flex;justify-content:space-between;gap:12px;margin:24px 0}
+  .bigbtn{padding:16px 22px;border-radius:999px;background:linear-gradient(180deg,#64b5f6,#49a6f1);color:#0b1130;font-weight:900;box-shadow:0 10px 26px rgba(0,0,0,.35)}
+  .right{ text-align:right }
+  .scoreFlash{animation:flash .7s ease} @keyframes flash{0%{transform:scale(1)}50%{transform:scale(1.07)}100%{transform:scale(1)}}
+  .tools{display:flex;gap:8px;margin:10px 0}
+  .gridline{stroke:#545454;stroke-width:1;opacity:.35}
+  .measure{stroke:#ff6b6b;stroke-width:3}
+  .mLabel{fill:#c52b2b;font-size:12px}
+  .cover{fill:#b9b9b9;opacity:.65;cursor:grab}
+</style></head><body>
+<header class="sticky"><div class="wrap"><div id="navpills" class="pills"></div></div></header>
+<main class="wrap">
+  <section class="hero">
+    <div class="title"><span class="dayBadge">Day 5</span></div>
+    <h1 class="title">🪔 Skandamata 🪔</h1>
+    <p class="ep">Mother of Courage • Community & Comparison</p>
+  </section>
+  <section class="card">
+    <h2>🚆 The Ebbinghaus Circles</h2>
+    <p class="muted">Surrounding circles change the apparent size of identical centers.</p>
+    <div class="stage"><svg id="stage" viewBox="0 0 800 500" preserveAspectRatio="xMidYMid meet"><text x="50%" y="52%" text-anchor="middle" fill="#888" font-size="18">Click "Show Illusion" to begin</text></svg></div>
+    <div class="tools"><button class="btn" id="show">Show Illusion</button><button class="btn ghost" id="grid">Ruler Grid</button><button class="btn ghost" id="measure">Measure</button><button class="btn ghost" id="covers">Covers</button><button class="btn ghost" id="reset">Reset</button></div>
+  </section>
+  <section class="card"><h2>🧠 Prediction Challenge</h2><p class="muted">Which center circle appears larger?</p><div class="row" id="pred"><button class="btn" data-opt="0">Left center</button><button class="btn" data-opt="1">Right center</button><button class="btn" data-opt="2">They’re equal</button></div></section>
+  <section class="card"><h2>🧠 Ancient Wisdom Quiz</h2><p class="muted">Replication in science is most similar to which spiritual idea?</p><div class="row" id="quiz"><button class="btn" data-quiz="0">Sangha (community)</button><button class="btn" data-quiz="1">Tapas (austerity)</button><button class="btn" data-quiz="2">Dhyana (meditation)</button></div></section>
+  <section class="quote">“Community shapes perception—share fair comparisons.”</section>
+  <section class="panel">
+    <h2>📚 Community of Inquiry</h2><p class="muted">Shared procedures let others see what you see.</p>
+    <div class="box"><h3>⭐ Key Points</h3><ul class="bullet"><li>Context-normalization skews size judgments</li><li>Hide surrounds to compare fairly</li><li>In community, we correct each other’s contexts</li></ul></div>
+    <div class="box"><h3>🔗 Connection to Illusion</h3><p>We grow truer together by revealing the frames that mislead us.</p></div>
+    <div class="box"><h3>🎯 Modern Resolution</h3><p>Cover the surrounds—the centers match; fair standards improve group judgments.</p></div>
+  </section>
+  <section class="footerNav">
+    <a class="bigbtn" href="index.html">🏠 Back to Overview</a>
+    <a class="bigbtn right" href="day6_page.html">Next: Day 6 - Katyayani 🧠</a>
+  </section>
+</main>
+<script>
+
+const KEY="nav9_score_v1";
+let store=JSON.parse(localStorage.getItem(KEY)||"{}");
+if(!store.score) store.score=0;
+if(!store.done) store.done={};
+function save(){ localStorage.setItem(KEY, JSON.stringify(store)); }
+function addScore(n){ store.score += n; save(); const sc=document.getElementById('score'); sc.textContent=store.score; sc.classList.add('scoreFlash'); setTimeout(()=>sc.classList.remove('scoreFlash'),500); }
+function buildNav(activeDay){
+  const bar=document.getElementById('navpills');
+  const mk=(href,label,active=false)=>`<a class="pill ${active?'active':''}" href="${href}">${label}</a>`;
+  let html = mk('index.html','🏠 Home', activeDay===0);
+  for(let i=1;i<=9;i++) html += mk(`day${i}_page.html`,`Day ${i}`, activeDay===i);
+  html += `<span class="score" id="score">Score: ${store.score}</span>`;
+  bar.innerHTML = html;
+}
+
+
+function el(type, attrs={}, parent){ const e=document.createElementNS("http://www.w3.org/2000/svg",type); Object.entries(attrs).forEach(([k,v])=>e.setAttribute(k,v)); if(parent) parent.appendChild(e); return e; }
+function drawGrid(svg){ const g=el("g",{class:"ggrid"},svg); for(let x=0;x<=800;x+=20){ el("line",{x1:x,y1:0,x2:x,y2:500,class:"gridline"},g);} for(let y=0;y<=500;y+=20){ el("line",{x1:0,y1:y,x2:800,y2:y,class:"gridline"},g);} g.style.display="none"; return g; }
+function addMeasure(svg){ let on=false, p1=null, line=null, label=null; const api={ toggle(){ on=!on; if(!on){p1=null;if(line){line.remove();label.remove();line=label=null;}} return on; } };
+  svg.addEventListener("click",e=>{ if(!on) return; const pt=svg.createSVGPoint(); pt.x=e.offsetX; pt.y=e.offsetY; const p=pt.matrixTransform(svg.getScreenCTM().inverse());
+    if(!p1){ p1=p; if(line){line.remove();label.remove();} line=el("line",{x1:p.x,y1:p.y,x2:p.x,y2:p.y,class:"measure"},svg); label=el("text",{x:p.x+6,y:p.y-6,class:"mLabel"},svg); label.textContent="0 px"; }
+    else { line.setAttribute("x2",p.x); line.setAttribute("y2",p.y); const d=Math.hypot(p.x-p1.x,p.y-p1.y).toFixed(1); label.setAttribute("x",(p.x+p1.x)/2+6); label.setAttribute("y",(p.y+p1.y)/2-6); label.textContent=d+" px"; p1=null; } });
+  return api;
+}
+function addCovers(svg){ const g=el("g",{},svg); const r1=el("rect",{x:120,y:100,width:200,height:30,class:"cover"},g); const r2=el("rect",{x:480,y:350,width:200,height:30,class:"cover"},g); [r1,r2].forEach(r=>{ makeDrag(r); r.style.display="none"; });
+  return { toggle(){ const show = r1.style.display==="none"; [r1,r2].forEach(r=>r.style.display=show?'block':'none'); return show; } };
+}
+function makeDrag(node){ let drag=false, ox=0, oy=0; node.addEventListener("mousedown",e=>{ drag=true; ox=e.offsetX-parseFloat(node.getAttribute("x")); oy=e.offsetY-parseFloat(node.getAttribute("y")); node.style.cursor="grabbing"; });
+  window.addEventListener("mouseup",()=>{ drag=false; node.style.cursor="grab"; }); window.addEventListener("mousemove",e=>{ if(!drag) return; const x=e.offsetX-ox, y=e.offsetY-oy; node.setAttribute("x",Math.max(0,Math.min(760,x))); node.setAttribute("y",Math.max(0,Math.min(470,y))); });
+}
+function draw(kind, svg){
+  svg.innerHTML=""; svg._grid=drawGrid(svg); svg._measure=addMeasure(svg); svg._covers=addCovers(svg);
+  if(kind==="ponzo"){ el("line",{x1:100,y1:80,x2:350,y2:440,stroke:"#000","stroke-width":3},svg); el("line",{x1:700,y1:80,x2:450,y2:440,stroke:"#000","stroke-width":3},svg);
+    for(let y=120;y<420;y+=26){ const x1=100+(y-80)*(250/360); const x2=700-(y-80)*(250/360); el("line",{x1:x1,y1:y,x2:x2,y2:y,stroke:"#666","stroke-width":2},svg); }
+    el("line",{x1:270,y1:200,x2:530,y2:200,stroke:"red","stroke-width":10},svg); el("line",{x1:360,y1:320,x2:440,y2:320,stroke:"red","stroke-width":10},svg); }
+  if(kind==="hering"){ const cx=400,cy=250; for(let a=-Math.PI/2;a<=Math.PI/2;a+=Math.PI/18){ const x1=cx-380*Math.cos(a), y1=cy-380*Math.sin(a), x2=cx+380*Math.cos(a), y2=cy+380*Math.sin(a); el("line",{x1,y1,x2,y2,stroke:"#666","stroke-width":1.5},svg);} el("line",{x1:80,y1:180,x2:720,y2:180,stroke:"red","stroke-width":7},svg); el("line",{x1:80,y1:320,x2:720,y2:320,stroke:"red","stroke-width":7},svg); }
+  if(kind==="zollner"){ for(let y=120;y<=360;y+=48){ el("line",{x1:80,y1:y,x2:720,y2:y,stroke:"#000","stroke-width":3},svg); const flip=((y/48)%2===0); for(let x=120;x<=680;x+=40){ const s=18; if(flip) el("line",{x1:x-s,y1:y-8,x2:x+s,y2:y+8,stroke:"#05f","stroke-width":2},svg); else el("line",{x1:x-s,y1:y+8,x2:x+s,y2:y-8,stroke:"#f33","stroke-width":2},svg); } } }
+  if(kind==="poggendorff"){ el("rect",{x:240,y:90,width:320,height:140,fill:"#e9e9e9"},svg); el("rect",{x:240,y:270,width:320,height:140,fill:"#e9e9e9"},svg); el("line",{x1:120,y1:150,x2:380,y2:410,stroke:"#000","stroke-width":6},svg); el("line",{x1:420,y1:90,x2:680,y2:350,stroke:"#000","stroke-width":6},svg); }
+  if(kind==="ebbinghaus"){ el("circle",{cx:320,cy:250,r:45,fill:"#aaa",stroke:"#000"},svg); el("circle",{cx:480,cy:250,r:45,fill:"#aaa",stroke:"#000"},svg); for(let a=0;a<2*Math.PI;a+=Math.PI/3){ el("circle",{cx:320+110*Math.cos(a),cy:250+110*Math.sin(a),r:45,fill:"#fff",stroke:"#000"},svg);} for(let a=0;a<2*Math.PI;a+=Math.PI/3){ el("circle",{cx:480+75*Math.cos(a),cy:250+75*Math.sin(a),r:20,fill:"#fff",stroke:"#000"},svg);} }
+  if(kind==="cafe"){ const rows=10, cols=18, startX=80, startY=120, w=640/cols, h=260/rows; for(let r=0;r<rows;r++){ const offset=(r%2)*w/2; const y=startY+r*h; for(let c=0;c<cols;c++){ const x=startX+c*w+offset; const fill=(c%2==0)?"#000":"#fff"; el("rect",{x,y,width:w,height:h,fill,stroke:"#000","stroke-width":.5},svg);} el("line",{x1:startX,y1:y,x2:startX+cols*w+w/2,y2:y,stroke:"#777","stroke-width":4},svg);} el("line",{x1:startX,y1:startY+rows*h,x2:startX+cols*w+w/2,y2:startY+rows*h,stroke:"#777","stroke-width":4},svg); }
+  if(kind==="rubin"){ el("rect",{x:0,y:0,width:800,height:500,fill:"#000"},svg); const path="M360 120 C350 160 350 210 370 240 C380 255 380 280 360 300 C340 320 340 350 360 380"; el("path",{d:path,stroke:"#fff","stroke-width":40,fill:"none","stroke-linecap":"round"},svg); el("path",{d:path.replaceAll("360","440").replaceAll("350","450").replaceAll("370","430"),stroke:"#fff","stroke-width":40,fill:"none","stroke-linecap":"round"},svg); }
+  if(kind==="necker"){ const A=[260,180], B=[540,180], C=[260,360], D=[540,360]; const dx=80, dy=60; const A2=[A[0]+dx,A[1]+dy], B2=[B[0]+dx,B[1]+dy], C2=[C[0]+dx,C[1]+dy], D2=[D[0]+dx,D[1]+dy]; [[A,B],[B,D],[D,C],[C,A],[A,A2],[B,B2],[C,C2],[D,D2],[A2,B2],[B2,D2],[D2,C2],[C2,A2]].forEach(([p,q])=>{ el("line",{x1:p[0],y1:p[1],x2:q[0],y2:q[1],stroke:"#000","stroke-width":4},svg); }); }
+  if(kind==="contrast"){ el("rect",{x:160,y:120,width:220,height:260,fill:"#222"},svg); el("rect",{x:420,y:120,width:220,height:260,fill:"#ddd"},svg); el("rect",{x:230,y:220,width:110,height:80,fill:"#888",stroke:"#000"},svg); el("rect",{x:460,y:220,width:110,height:80,fill:"#888",stroke:"#000"},svg); }
+}
+
+buildNav(5); document.getElementById('score').textContent = "Score: " + store.score;
+const svg = document.getElementById('stage');
+document.getElementById('show').onclick = ()=>{ draw("ebbinghaus", svg); addScore(5); };
+document.getElementById('grid').onclick = (e)=>{ const g = svg._grid; const show = g && g.style.display==="none"; if(g) g.style.display = show ? "block" : "none"; e.target.classList.toggle("active", show); };
+document.getElementById('measure').onclick = ()=>{ if(svg._measure) svg._measure.toggle(); };
+document.getElementById('covers').onclick = ()=>{ if(svg._covers) svg._covers.toggle(); };
+document.getElementById('reset').onclick = ()=>{ svg.innerHTML='<text x="50%" y="52%" text-anchor="middle" fill="#888" font-size="18">Click "Show Illusion" to begin</text>'; };
+document.getElementById('pred').addEventListener('click', ev=>{ const idx = ev.target.getAttribute('data-opt'); if(idx===null) return; if(parseInt(idx)==2){ addScore(10); alert("✅ Great eye!"); } else { alert("ℹ️ Good guess — use the tools to check."); } });
+document.getElementById('quiz').addEventListener('click', ev=>{ const idx = ev.target.getAttribute('data-quiz'); if(idx===null) return; if(parseInt(idx)==0){ addScore(10); alert("🏅 Correct!"); } else { alert("Not quite — try again after the debate section."); } });
+</script></body></html>
