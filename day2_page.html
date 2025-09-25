@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 2: Brahmacharini - The Devoted Student</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #2d1b69, #1a0933, #4a0e4e);
+            color: #fff;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .navigation {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .nav-link {
+            color: #ffd700;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            background: rgba(255, 215, 0, 0.1);
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 215, 0, 0.2);
+            transform: scale(1.05);
+        }
+
+        .header {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .day-number {
+            font-size: 1.5rem;
+            color: #ffd700;
+            font-weight: bold;
+            background: rgba(255,215,0,0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .goddess-name {
+            font-size: 3rem;
+            color: #ffb347;
+            font-weight: bold;
+            margin: 0.5rem 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .goddess-subtitle {
+            font-size: 1.3rem;
+            color: #ddd;
+            font-style: italic;
+            margin-bottom: 2rem;
+        }
+
+        .main-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .illusion-section {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            color: #ffd700;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .illusion-canvas {
+            width: 100%;
+            height: 300px;
+            border: 3px solid #ffd700;
+            border-radius: 15px;
+            background: white;
+            margin: 1rem 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .controls {
+            display: flex;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #ffd700, #ffb347);
+            color: #2d1b69;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
+        }
+
+        .interactive-panel {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .game-section {
+            background: rgba(255, 179, 71, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            text-align: center;
+            border: 2px solid rgba(255, 179, 71, 0.3);
+        }
+
+        .game-title {
+            color: #ffd700;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+
+        .score-display {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 20px;
+            font-weight: bold;
+            display: inline-block;
+            margin: 1rem;
+            animation: scoreAppear 0.5s ease-out;
+        }
+
+        @keyframes scoreAppear {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .timer-display {
+            background: rgba(52, 152, 219, 0.3);
+            color: #fff;
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin: 1rem 0;
+            border: 2px solid rgba(52, 152, 219, 0.5);
+        }
+
+        .spiritual-insight {
+            background: rgba(255, 179, 71, 0.2);
+            border-left: 6px solid #ffb347;
+            padding: 2rem;
+            margin: 2rem 0;
+            border-radius: 10px;
+            font-style: italic;
+            font-size: 1.1rem;
+            position: relative;
+        }
+
+        .spiritual-insight::before {
+            content: '"';
+            font-size: 4rem;
+            color: rgba(255, 179, 71, 0.4);
+            position: absolute;
+            top: -10px;
+            left: 20px;
+        }
+
+        .debate-content {
+            background: rgba(52, 73, 94, 0.8);
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+        }
+
+        .debate-section {
+            background: rgba(255, 215, 0, 0.1);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+        }
+
+        .debate-title {
+            color: #ffd700;
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .navigation-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.3);
+            margin-top: 3rem;
+        }
+
+        .nav-btn {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .nav-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            .navigation {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .goddess-name {
+                font-size: 2rem;
+            }
+            
+            .main-content {
+                padding: 1rem;
+            }
+            
+            .navigation-footer {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="navigation">
+        <a href="index.html" class="nav-link">🏠 Home</a>
+        <div>
+            <a href="day1.html" class="nav-link">Day 1</a>
+            <a href="day2.html" class="nav-link" style="background: rgba(255, 215, 0, 0.3);">Day 2</a>
+            <a href="day3.html" class="nav-link">Day 3</a>
+            <a href="day4.html" class="nav-link">Day 4</a>
+            <a href="day5.html" class="nav-link">Day 5</a>
+            <a href="day6.html" class="nav-link">Day 6</a>
+            <a href="day7.html" class="nav-link">Day 7</a>
+            <a href="day8.html" class="nav-link">Day 8</a>
+            <a href="day9.html" class="nav-link">Day 9</a>
+        </div>
+        <div id="score-display" style="color: #ffd700; font-weight: bold;">Score: 0</div>
+    </div>
+
+    <div class="header">
+        <div class="day-number">Day 2</div>
+        <div class="goddess-name">🕯️ Brahmacharini 🕯️</div>
+        <div class="goddess-subtitle">The Devoted Student • Knowledge & Discipline</div>
+    </div>
+
+    <div class="main-content">
+        <div class="illusion-section">
+            <h2 class="section-title">⭐ The Hering Radial Illusion</h2>
+            <p style="text-align: center; margin-bottom: 2rem; font-size: 1.1rem;">
+                Discover how radial patterns can bend our perception of perfectly straight lines
+            </p>
+            
+            <canvas class="illusion-canvas" id="heringCanvas"></canvas>
+            
+            <div class="controls">
+                <button class="btn" onclick="drawHering()">🌟 Show Hering Illusion</button>
+                <button class="btn" onclick="checkStraight()">📐 Verify Straightness</button>
+                <button class="btn" onclick="resetCanvas()">🔄 Reset Canvas</button>
+            </div>
+        </div>
+
+        <div class="interactive-panel">
+            <div class="game-section">
+                <h3 class="game-title">🧘 Meditation Challenge</h3>
+                <p>Focus on the center point for 30 seconds. Do the lines still look curved after focused attention?</p>
+                <div class="timer-display" id="meditation-timer">Ready to begin your meditation practice?</div>
+                <button class="btn" onclick="startMeditation()">🕯️ Start Focus Practice</button>
+                <div id="meditation-result" class="score-display" style="display:none;"></div>
+            </div>
+            
+            <div class="game-section">
+                <h3 class="game-title">🎯 Perception Challenge</h3>
+                <p>Are the red horizontal lines perfectly straight?</p>
+                <div class="controls">
+                    <button class="btn" onclick="makePrediction('straight')">📏 Yes, Perfectly Straight</button>
+                    <button class="btn" onclick="makePrediction('curved')">🌊 No, They're Curved</button>
+                </div>
+                <div id="prediction-result" class="score-display" style="display:none;"></div>
+            </div>
+        </div>
+
+        <div class="spiritual-insight">
+            Strong emotions and mental patterns can bend how we see reality—steady the mind through devoted practice like the eternal student who seeks truth beyond appearances.
+        </div>
+
+        <div class="debate-content">
+            <h2 class="section-title">🧠 Knowledge Paths: Logic vs. Insight</h2>
+            <p style="text-align: center; margin-bottom: 2rem;">
+                Mathematical School vs. Contemplative School: Two Rivers Flowing to the Same Ocean of Truth
+            </p>
+            
+            <div class="debate-section">
+                <h4 class="debate-title">🔢 The Mathematical School (Brahmagupta, Bhaskara, Ramanujan)</h4>
+                <ul style="margin-left: 2rem;">
+                    <li><strong>Rigorous logical proof</strong> - step-by-step verification</li>
+                    <li><strong>Universal patterns:</strong> Algebra and geometry reveal cosmic order</li>
+                    <li><strong>"Mathematics is the language of the Divine"</strong> - numbers don't lie</li>
+                    <li><strong>Reproducible results</strong> - anyone can verify the calculations</li>
+                </ul>
+            </div>
+            
+            <div class="debate-section">
+                <h4 class="debate-title">🧘 The Contemplative School (Patanjali, Shankara, Buddha)</h4>
+                <ul style="margin-left: 2rem;">
+                    <li><strong>Direct experience</strong> transcends intellectual understanding</li>
+                    <li><strong>Meditative insight:</strong> Truth revealed through stillness of mind</li>
+                    <li><strong>"The knower, knowing, and known become one"</strong> - subject-object unity</li>
+                    <li><strong>Immediate realization</strong> - no intermediate steps needed</li>
+                </ul>
+            </div>
+            
+            <div class="debate-section">
+                <h4 class="debate-title">🌟 The Hering Connection</h4>
+                <p>Just as radial lines "bend" our perception of straight lines, both logical proofs and spiritual practices can "bend" our understanding toward truth. Neither approach is wrong - they're different methods of revealing what was always there.</p>
+            </div>
+            
+            <div class="debate-section">
+                <h4 class="debate-title">🔄 Brahmacharini's Integration</h4>
+                <p>The devoted student goddess represents the synthesis - she embodies both rigorous study (mathematical discipline) AND spiritual practice (yogic devotion). Modern quantum physics shows this integration: consciousness and measurement are intimately connected. Truth has many doorways, all leading to the same room.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="navigation-footer">
+        <a href="day1.html" class="nav-btn">← Day 1: Shailaputri</a>
+        <div style="text-align: center;">
+            <div style="color: #ffd700; font-size: 1.2rem; font-weight: bold;">Day 2 of 9</div>
+            <div style="color: #ddd;">The Path of Devoted Learning</div>
+        </div>
+        <a href="day3.html" class="nav-btn">Next: Day 3 - Chandraghanta →</a>
+    </div>
+
+    <script>
+        // Game state
+        let dayScore = 0;
+        let canvas, ctx;
+        let meditationInterval;
+
+        // Initialize canvas
+        function initCanvas() {
+            canvas = document.getElementById('heringCanvas');
+            ctx = canvas.getContext('2d');
+            canvas.width = canvas.offsetWidth;
+            canvas.height = 300;
+        }
+
+        // Draw Hering illusion
+        function drawHering() {
+            if (!ctx) initCanvas();
+            
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            
+            // Draw radial lines
+            ctx.strokeStyle = '#95a5a6';
+            ctx.lineWidth = 1.5;
+            for (let i = 0; i < 32; i++) {
+                const angle = (i / 32) * 2 * Math.PI;
+                ctx.beginPath();
+                ctx.moveTo(centerX, centerY);
+                ctx.lineTo(centerX + Math.cos(angle) * 180, centerY + Math.sin(angle) * 180);
+                ctx.stroke();
+            }
+            
+            // Draw two perfectly straight horizontal lines
+            ctx.strokeStyle = '#e74c3c';
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+            ctx.moveTo(40, centerY - 50);
+            ctx.lineTo(canvas.width - 40, centerY - 50);
+            ctx.moveTo(40, centerY + 50);
+            ctx.lineTo(canvas.width - 40, centerY + 50);
+            ctx.stroke();
+            
+            // Add center point
+            ctx.fillStyle = '#2c3e50';
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, 5, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            // Add labels
+            ctx.fillStyle = '#2c3e50';
+            ctx.font = 'bold 18px Georgia';
+            ctx.textAlign = 'center';
+            ctx.fillText('⭐ Focus on center - are the red lines straight? ⭐', centerX, 40);
+        }
+
+        function checkStraight() {
+            if (!ctx) return;
+            
+            // Draw verification lines with ruler
+            ctx.strokeStyle = '#27ae60';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([3, 3]);
+            
+            const centerY = canvas.height / 2;
+            
+            // Ruler guides
+            ctx.beginPath();
+            ctx.moveTo(30, centerY - 55);
+            ctx.lineTo(canvas.width - 30, centerY - 55);
+            ctx.moveTo(30, centerY + 55);
+            ctx.lineTo(canvas.width - 30, centerY + 55);
+            ctx.stroke();
+            
+            ctx.setLineDash([]);
+            
+            // Show verification
+            ctx.fillStyle = '#27ae60';
+            ctx.font = 'bold 16px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('✅ Ruler confirms: Both lines are perfectly straight!', canvas.width / 2, canvas.height - 20);
+            
+            updateScore(25);
+            showCustomAlert('📐 Straightness Verified!', 'The red lines are perfectly straight! The radial background created the powerful illusion of curvature. This shows how context and surroundings can completely distort our perception of reality.');
+        }
+
+        function resetCanvas() {
+            if (ctx) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = '#ecf0f1';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                ctx.fillStyle = '#7f8c8d';
+                ctx.font = '20px Georgia';
+                ctx.textAlign = 'center';
+                ctx.fillText('Click "Show Hering Illusion" to begin', canvas.width / 2, canvas.height / 2);
+            }
+        }
+
+        function makePrediction(choice) {
+            const resultDiv = document.getElementById('prediction-result');
+            
+            if (choice === 'straight') {
+                resultDiv.innerHTML = '🎉 Excellent perception! They are perfectly straight! +30 points';
+                resultDiv.style.background = 'linear-gradient(45deg, #27ae60, #2ecc71)';
+                updateScore(30);
+            } else {
+                resultDiv.innerHTML = '🌊 The Hering illusion got you! They\'re actually straight. +15 points for engaging';
+                resultDiv.style.background = 'linear-gradient(45deg, #f39c12, #e67e22)';
+                updateScore(15);
+            }
+            
+            resultDiv.style.display = 'block';
+        }
+
+        function startMeditation() {
+            const timerDiv = document.getElementById('meditation-timer');
+            const resultDiv = document.getElementById('meditation-result');
+            let timeLeft = 30;
+            
+            timerDiv.innerHTML = '🕯️ Focus on the center point... breathe deeply... 30s';
+            timerDiv.style.background = 'rgba(52, 152, 219, 0.3)';
+            
+            meditationInterval = setInterval(() => {
+                timeLeft--;
+                if (timeLeft > 0) {
+                    timerDiv.innerHTML = `🧘‍♀️ Keep focusing on the center... steady mind sees truth... ${timeLeft}s`;
+                } else {
+                    clearInterval(meditationInterval);
+                    timerDiv.innerHTML = '✨ Meditation Complete! Awareness expanded!';
+                    timerDiv.style.background = 'rgba(39, 174, 96, 0.3)';
+                    resultDiv.innerHTML = '🧘‍♀️ Focused awareness transcends illusion! With concentrated attention, the curvature illusion often diminishes. +50 points';
+                    resultDiv.style.display = 'block';
+                    updateScore(50);
+                    
+                    setTimeout(() => showAchievement('🕯️ Meditation Master', 'Completed 30-second focus practice!'), 1000);
+                }
+            }, 1000);
+        }
+
+        function updateScore(points) {
+            dayScore += points;
+            document.getElementById('score-display').innerHTML = `Score: ${dayScore}`;
+            
+            // Save to localStorage
+            localStorage.setItem('navaratri-day2-score', dayScore);
+            
+            // Achievement check
+            if (dayScore >= 100) {
+                setTimeout(() => showAchievement('📚 Student of Truth', 'Completed Day 2 with 100+ points!'), 1500);
+            }
+        }
+
+        function showCustomAlert(title, message) {
+            const alertDiv = document.createElement('div');
+            alertDiv.innerHTML = `
+                <div style="
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    background: linear-gradient(135deg, rgba(52, 73, 94, 0.95), rgba(44, 62, 80, 0.95));
+                    backdrop-filter: blur(10px);
+                    color: white;
+                    padding: 2rem;
+                    border-radius: 20px;
+                    max-width: 500px;
+                    z-index: 1002;
+                    text-align: center;
+                    border: 2px solid #f39c12;
+                    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+                ">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">📐</div>
+                    <h3 style="color: #f39c12; margin-bottom: 1rem; font-size: 1.3rem;">${title}</h3>
+                    <p style="line-height: 1.6; margin-bottom: 1.5rem;">${message}</p>
+                    <button onclick="this.parentElement.parentElement.remove()" style="
+                        background: linear-gradient(45deg, #f39c12, #e67e22);
+                        color: white;
+                        border: none;
+                        padding: 0.8rem 2rem;
+                        border-radius: 25px;
+                        font-weight: bold;
+                        cursor: pointer;
+                        font-size: 1rem;
+                    ">Continue Learning</button>
+                </div>
+            `;
+            
+            document.body.appendChild(alertDiv);
+        }
+
+        function showAchievement(title, description) {
+            const achievement = document.createElement('div');
+            achievement.innerHTML = `
+                <div style="
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: linear-gradient(45deg, #f39c12, #e67e22);
+                    color: white;
+                    padding: 1rem 1.5rem;
+                    border-radius: 15px;
+                    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+                    z-index: 1001;
+                    animation: achievementSlide 0.5s ease-out;
+                    max-width: 300px;
+                ">
+                    <div style="font-weight: bold; font-size: 1.1rem;">${title}</div>
+                    <div style="font-size: 0.9rem; margin-top: 0.5rem;">${description}</div>
+                </div>
+            `;
+            
+            document.body.appendChild(achievement);
+            
+            setTimeout(() => {
+                if (document.body.contains(achievement)) {
+                    document.body.removeChild(achievement);
+                }
+            }, 5000);
+        }
+
+        // Initialize on load
+        window.addEventListener('load', function() {
+            initCanvas();
+            resetCanvas();
+            
+            // Load saved score
+            const savedScore = localStorage.getItem('navaratri-day2-score');
+            if (savedScore) {
+                dayScore = parseInt(savedScore);
+                document.getElementById('score-display').innerHTML = `Score: ${dayScore}`;
+            }
+        });
+
+        // Handle resize
+        window.addEventListener('resize', function() {
+            if (canvas) {
+                canvas.width = canvas.offsetWidth;
+                canvas.height = 300;
+                resetCanvas();
+            }
+        });
+
+        // Add CSS for animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes achievementSlide {
+                from {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
