@@ -1,0 +1,100 @@
+
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Day 2 · Brahmacharini</title><style>
+:root{--bg1:#140b24;--bg2:#25133f;--card1:#2b1a55;--card2:#231847;--gold:#f1c96b;--gold2:#ffd98f;--ink:#f7efe4;--muted:#cdbfe6;--accent:#ffd98f;--accent2:#ffecb3}
+*{box-sizing:border-box}html,body{height:100%}
+body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);
+background: radial-gradient(160% 180% at 50% -20%, var(--bg2) 0%, var(--bg1) 60%, #0f0b1c 100%);}
+header{position:sticky;top:0;z-index:20;background:linear-gradient(180deg, rgba(0,0,0,.45), rgba(0,0,0,0));border-bottom:1px solid rgba(255,255,255,.06);backdrop-filter: blur(4px)}
+.wrap{max-width:1200px;margin:0 auto;padding:16px}.brand{font-weight:900;letter-spacing:.4px;color:var(--accent);font-size:28px}
+.toprow{display:flex;align-items:center;justify-content:space-between;gap:12px}.score{font-weight:900;color:var(--accent2)}
+.pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.pill{background:rgba(255,255,255,.08);border:1px solid rgba(241,201,107,.6);color:var(--accent2);padding:6px 12px;border-radius:999px;text-decoration:none;font-weight:800;box-shadow: inset 0 0 0 1px rgba(255,255,255,.05)}
+.pill.active{background:linear-gradient(180deg, var(--gold2), var(--gold));color:#2a1544}
+h1.title{text-align:center;margin:18px 0 4px 0;color:var(--accent);font-size:42px;letter-spacing:.6px}.sub{text-align:center;color:var(--muted);margin-bottom:10px}
+.card{background: radial-gradient(130% 150% at 50% 0%, var(--card1) 0%, var(--card2) 70%);border:2px solid rgba(241,201,107,.55);border-radius:22px;padding:16px;margin:16px 0;box-shadow: 0 14px 36px rgba(0,0,0,.35), inset 0 0 0 1px rgba(255,255,255,.05)}
+.card h2{margin:6px 0 8px 0;color:var(--accent)}.muted{color:var(--muted)}
+.stage{background:#fff;border:4px solid var(--gold);border-radius:18px;min-height:320px;display:flex;align-items:center;justify-content:center;overflow:hidden}.stage svg{width:100%;height:340px;display:block}
+.controls{margin-top:10px;display:flex;gap:10px;flex-wrap:wrap}
+.btn{appearance:none;border:none;cursor:pointer;background:linear-gradient(180deg, var(--gold2), var(--gold));color:#2a1540;font-weight:900;border-radius:999px;padding:10px 14px;box-shadow:0 6px 16px rgba(0,0,0,.25)}
+.btn.ghost{background:transparent;color:var(--accent2);border:1px solid rgba(255,255,255,.28)}
+.gridline{stroke:#646464;stroke-width:1;opacity:.35}.measure{stroke:#e45858;stroke-width:3}.mLabel{fill:#b93232;font-size:12px}.cover{fill:#b9b9b9;opacity:.65;cursor:grab}
+.bullets{padding-left:18px}.bullets li{margin:6px 0}.quote{background:rgba(0,0,0,.28);border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:14px;font-size:18px;font-style:italic}
+.footerNav{display:flex;justify-content:space-between;gap:12px;margin:24px 0}.bigbtn{padding:14px 20px;border-radius:999px;text-decoration:none;font-weight:900;background:linear-gradient(180deg,#64b5f6,#49a6f1);color:#0b1130}
+.badge{display:inline-block;background:#2a1746;border:1px solid rgba(255,255,255,.2);color:#ffd98f;padding:4px 8px;border-radius:10px;font-size:12px;margin-left:6px}
+</style></head><body>
+<header><div class="wrap"><div class="toprow"><div class="brand">Navaratri: Science • Spirituality • Perception</div><div>Score: <span id="score" class="score">0</span><span class="badge">local</span></div></div><div id="pills" class="pills"></div></div></header>
+<main class="wrap">
+  <h1 class="title">🪔 Brahmacharini 🪔</h1><div class="sub">The Devoted Student • Discipline & Straightness</div>
+  <section class="card"><h2>The Hering Radial Illusion</h2><p class="muted">Radial backgrounds can bend our sense of straightness—test the lines yourself.</p>
+    <div class="stage"><svg id="stage" viewBox="0 0 800 500" preserveAspectRatio="xMidYMid meet"><text x="50%" y="52%" text-anchor="middle" fill="#888" font-size="18">Click "Show Illusion" to begin</text></svg></div>
+    <div class="controls"><button id="show" class="btn">Show Illusion</button><button id="grid" class="btn ghost">Ruler Grid</button><button id="measure" class="btn ghost">Measure</button><button id="covers" class="btn ghost">Covers</button><button id="reset" class="btn ghost">Reset</button></div>
+  </section>
+  <section class="card"><h2>🧠 Prediction Challenge</h2><p class="muted">Before you test, do the red lines look bowed or straight?</p><div class="controls" id="pred"></div></section>
+  <section class="card"><h2>🧠 Ancient Wisdom Quiz</h2><p class="muted">In Indian traditions, the disciplined path of study and restraint is called…</p><div class="controls" id="quiz"></div></section>
+  <section class="quote">“Strong emotions can bend how we see—steady the mind like the devoted student.”</section>
+  <section class="card"><h2>📚 Mathematical Logic vs. Yogic Insight — Different Paths to Truth</h2>
+    <div class="card" style="background:#2b3550; border-color:#8db3ff"><ul class="bullets"><li>Tradition praises Brahmacharya: disciplined study, restraint, and clarity of mind.</li><li>Science adds formal logic and measurement to correct biases in perception.</li><li>Both insist on training attention—the mind can ‘bow’ straight lines under emotion or context.</li></ul></div>
+    <div class="card" style="background:#2b3550; border-color:#9fe5c7"><h3>Connection to the Illusion</h3><p class="muted">In the Hering illusion, radial context makes straight lines appear bowed. A steady, trained attention (brahmacharya) restores straightness—like measurement and proof.</p></div>
+    <div class="card" style="background:#2b3550; border-color:#e3c083"><h3>Modern Resolution</h3><p class="muted">Modern vision science explains that orientation‑selective neurons and global context bias our judgment. Tools and training help us see what is actually there.</p></div>
+  </section>
+  <section class="footerNav"><a class="bigbtn" href="index.html">🏠 Back to Overview</a><a class="bigbtn" href="day3_page.html">Next Day →</a></section>
+</main>
+<script>
+function getScore(){ return parseInt(localStorage.getItem('nav_score')||'0',10); }
+function addScore(n){ const s=getScore()+n; localStorage.setItem('nav_score', s); const el=document.getElementById('score'); if(el) el.textContent = s; return s; }
+function makeNav(active){
+  const pills=document.getElementById('pills');
+  const mk=(href,label,act)=>`<a class="pill ${act?'active':''}" href="${href}">${label}</a>`;
+  pills.innerHTML = mk('index.html','🏠 Home',active===0)
+    + mk('day1_page.html','Day 1',active===1)
+    + mk('day2_page.html','Day 2',active===2)
+    + mk('#','Day 3',false) + mk('#','Day 4',false) + mk('#','Day 5',false)
+    + mk('#','Day 6',false) + mk('#','Day 7',false) + mk('#','Day 8',false) + mk('#','Day 9',false);
+  const sc=document.getElementById('score'); if(sc) sc.textContent = getScore();
+}
+function elNS(tag,attrs,parent){const e=document.createElementNS('http://www.w3.org/2000/svg',tag); for(const k in attrs) e.setAttribute(k,attrs[k]); if(parent) parent.appendChild(e); return e; }
+function drawGrid(svg){ const g=elNS('g',{class:'ggrid'},svg); for(let x=0;x<=800;x+=20) elNS('line',{x1:x,y1:0,x2:x,y2:500,class:'gridline'},g); for(let y=0;y<=500;y+=20) elNS('line',{x1:0,y1:y,x2:800,y2:y,class:'gridline'},g); g.style.display='none'; return g; }
+function addMeasure(svg){ let on=false, p1=null, line=null, label=null; svg.addEventListener('click',e=>{ if(!on) return; const pt=svg.createSVGPoint(); pt.x=e.offsetX; pt.y=e.offsetY; const p=pt.matrixTransform(svg.getScreenCTM().inverse()); if(!p1){ p1=p; if(line){ line.remove(); label.remove(); } line=elNS('line',{x1:p.x,y1:p.y,x2:p.x,y2:p.y,class:'measure'},svg); label=elNS('text',{x:p.x+6,y:p.y-6,class:'mLabel'},svg); label.textContent='0 px'; } else { line.setAttribute('x2',p.x); line.setAttribute('y2',p.y); const d=Math.hypot(p.x-p1.x,p.y-p1.y).toFixed(1); label.setAttribute('x',(p.x+p1.x)/2+6); label.setAttribute('y',(p.y+p1.y)/2-6); label.textContent=d+' px'; p1=null; }}); return {toggle(){ on=!on; if(!on){ p1=null; if(line){ line.remove(); label.remove(); line=label=null; } } return on; }}; }
+function addCovers(svg){ const g=elNS('g',{},svg); const r1=elNS('rect',{x:120,y:100,width:200,height:30,rx:6,ry:6,class:'cover'},g); const r2=elNS('rect',{x:480,y:350,width:200,height:30,rx:6,ry:6,class:'cover'},g);
+  [r1,r2].forEach(r=>{ let drag=false,ox=0,oy=0; r.addEventListener('mousedown',e=>{ drag=true; ox=e.offsetX-parseFloat(r.getAttribute('x')); oy=e.offsetY-parseFloat(r.getAttribute('y')); r.style.cursor='grabbing'; }); window.addEventListener('mouseup',()=>{ drag=false; r.style.cursor='grab'; }); window.addEventListener('mousemove',e=>{ if(!drag) return; const x=e.offsetX-ox, y=e.offsetY-oy; r.setAttribute('x',Math.max(0,Math.min(760,x))); r.setAttribute('y',Math.max(0,Math.min(470,y))); }); r.style.display='none'; });
+  return { toggle(){ const show = r1.style.display==='none'; [r1,r2].forEach(r=>r.style.display=show?'block':'none'); return show; } };
+}
+function draw(kind,svg){
+  svg.innerHTML='';
+  svg._grid = drawGrid(svg);
+  svg._measure = addMeasure(svg);
+  svg._covers = addCovers(svg);
+  if(kind==='ponzo'){
+    elNS('line',{x1:100,y1:80,x2:350,y2:440,stroke:'#000','stroke-width':3},svg);
+    elNS('line',{x1:700,y1:80,x2:450,y2:440,stroke:'#000','stroke-width':3},svg);
+    for(let y=120;y<420;y+=26){
+      const x1=100+(y-80)*(250/360);
+      const x2=700-(y-80)*(250/360);
+      elNS('line',{x1:x1,y1:y,x2:x2,y2:y,stroke:'#666','stroke-width':2},svg);
+    }
+    elNS('line',{x1:270,y1:200,x2:530,y2:200,stroke:'red','stroke-width':10},svg);
+    elNS('line',{x1:360,y1:320,x2:440,y2:320,stroke:'red','stroke-width':10},svg);
+  }
+  if(kind==='hering'){
+    const cx=400, cy=250;
+    for(let a=-Math.PI/2;a<=Math.PI/2;a+=Math.PI/18){
+      const x1=cx-380*Math.cos(a), y1=cy-380*Math.sin(a), x2=cx+380*Math.cos(a), y2=cy+380*Math.sin(a);
+      elNS('line',{x1,y1,x2,y2,stroke:'#666','stroke-width':1.5},svg);
+    }
+    elNS('line',{x1:80,y1:180,x2:720,y2:180,stroke:'red','stroke-width':7},svg);
+    elNS('line',{x1:80,y1:320,x2:720,y2:320,stroke:'red','stroke-width':7},svg);
+  }
+}
+</script>
+<script>
+makeNav(2);
+document.getElementById('show').onclick=function(){ draw('hering', document.getElementById('stage')); addScore(5); };
+document.getElementById('grid').onclick=function(e){ const svg=document.getElementById('stage'); const g=svg._grid; const show=g&&g.style.display==='none'; if(g) g.style.display=show?'block':'none'; e.target.classList.toggle('active',show); };
+document.getElementById('measure').onclick=function(){ const svg=document.getElementById('stage'); if(svg._measure) svg._measure.toggle(); };
+document.getElementById('covers').onclick=function(){ const svg=document.getElementById('stage'); if(svg._covers) svg._covers.toggle(); };
+document.getElementById('reset').onclick=function(){ const svg=document.getElementById('stage'); svg.innerHTML='<text x="50%" y="52%" text-anchor="middle" fill="#888" font-size="18">Click "Show Illusion" to begin</text>'; };
+const predOpts=['Bowed','Straight','Unsure'];const predContainer=document.getElementById('pred');
+predOpts.forEach(function(t,i){ const b=document.createElement('button'); b.className='btn'; b.textContent=t; b.onclick=function(){ if(i==1){ alert('✅ Correct! +10'); addScore(10); } else { alert('Not quite—use the tools to verify.'); } }; predContainer.appendChild(b); });
+const quizOpts=['Sannyasa','Brahmacharya','Bhakti'];const quizContainer=document.getElementById('quiz');
+quizOpts.forEach(function(t,i){ const b=document.createElement('button'); b.className='btn'; b.textContent=t; b.onclick=function(){ if(i==1){ alert('🏅 Correct! +10'); addScore(10); } else { alert('Try again!'); } }; quizContainer.appendChild(b); });
+</script></body></html>
